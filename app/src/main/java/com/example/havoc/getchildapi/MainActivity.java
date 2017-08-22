@@ -1,5 +1,6 @@
 package com.example.havoc.getchildapi;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -11,18 +12,19 @@ import retrofit.Callback;
 import retrofit.Response;
 
 public class MainActivity extends AppCompatActivity {
-    String username;
+    private SharedPreferences preferences;
+    String authKey, loginType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        preferences= getApplicationContext().getSharedPreferences("DGSchool", 0);
+        authKey= preferences.getString("AUTHKEY", "");
+        loginType= preferences.getString("LOGINTYPE", "");
         callAPi();
     }
 
     private void callAPi() {
-        String authKey = "06050c493cef48dbd205418b3cf45572";
-        String loginType = "parent";
-
         RestClient.RetroApiInterface retro = RestClient.getClient();
         retro.apiGetchild(authKey,loginType)
                 .enqueue(new Callback<GetClassResponse>() {

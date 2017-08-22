@@ -1,6 +1,8 @@
 package com.example.havoc.getchildapi.RestClientr;
 
 import com.example.havoc.getchildapi.model.GetClassResponse;
+import com.example.havoc.getchildapi.model.LoginPojo;
+import com.example.havoc.getchildapi.model.SystemInfoPojo;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Response;
@@ -49,6 +51,14 @@ public class RestClient {
     }
 
     public interface RetroApiInterface {
+        @FormUrlEncoded
+        @POST("index.php?mobile/login")
+        Call<LoginPojo> apiLogin(@Field("email") String username, @Field("password") String password, @Field("authenticate") String authenticate);
+
+        @FormUrlEncoded
+        @POST("index.php?mobile/get_system_info")
+        Call<SystemInfoPojo> apiSystemInfo(@Field("authenticate") String authenticate);
+
 
         @FormUrlEncoded
         @POST("index.php?mobile/get_class")
